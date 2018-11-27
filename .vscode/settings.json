@@ -1,0 +1,4 @@
+{
+    "npm-intellisense.importES6": false,
+    "npm-intellisense.scanDevDependencies": false,
+}
