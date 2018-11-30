@@ -1,10 +1,15 @@
 const express = require('express')
-const User = require('../models/user')
 const bcryptjs = require('bcryptjs')
+const User = require('../models/user')
 
 const app = express()
+const {
+    verifyToken,
+    verifyAdminRole
+} = require('../middlewares/authentication')
 
-app.get('/user', (req, res) => {
+app.get('/user', verifyToken, (req, res) => {
+
     const from = Number(req.query.from) || 0
     const limit = Number(req.query.limit) || 0
 
@@ -21,9 +26,10 @@ app.get('/user', (req, res) => {
                 })
             }
 
-            User.count({
+            User.countDocuments({
                 state: true
             }, (err, total) => {
+                ``
                 res.json({
                     ok: true,
                     total,
@@ -33,7 +39,7 @@ app.get('/user', (req, res) => {
         })
 })
 
-app.post('/user', (req, res) => {
+app.post('/user', [verifyToken, verifyAdminRole], (req, res) => {
     let body = req.body
 
 
@@ -59,7 +65,7 @@ app.post('/user', (req, res) => {
     })
 })
 
-app.put('/user/:id', (req, res) => {
+app.put('/user/:id', verifyToken, (req, res) => {
     let id = req.params.id
 
     const validFields = ['name', 'email', 'img', 'role', 'state']
@@ -86,7 +92,7 @@ app.put('/user/:id', (req, res) => {
         })
     })
 })
-app.delete('/user/:id', (req, res) => {
+app.delete('/user/:id', [verifyToken, verifyAdminRole], (req, res) => {
     let id = req.params.id
 
     // User.findByIdAndRemove(id, (err, user) => {
