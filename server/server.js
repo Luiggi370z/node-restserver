@@ -3,6 +3,7 @@ require('./config/config')
 const express = require('express')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
+const path = require('path')
 
 const app = express()
 
@@ -13,6 +14,10 @@ app.use(bodyParser.urlencoded({
 
 // parse application json
 app.use(bodyParser.json())
+
+// enable public folder
+const publicPath = path.resolve(__dirname, '../public')
+app.use(express.static(publicPath))
 
 app.use(require('./routes/index'))
 

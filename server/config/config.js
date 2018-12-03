@@ -12,3 +12,5 @@ process.env.TOKEN_SEED = process.env.TOKEN_SEED || 'seed-dev'
 
 //secs x min x hours x days
 process.env.TOKEN_EXPIRATION_TIME = 60 * 60 * 24 * 30
+
+process.env.GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || '10839397877-he85dhrtvgankkq7p0t271cmv35us29q.apps.googleusercontent.com'
