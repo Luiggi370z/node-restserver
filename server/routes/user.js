@@ -29,7 +29,6 @@ app.get('/user', verifyToken, (req, res) => {
             User.countDocuments({
                 state: true
             }, (err, total) => {
-                ``
                 res.json({
                     ok: true,
                     total,

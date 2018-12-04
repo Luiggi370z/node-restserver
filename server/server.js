@@ -28,6 +28,7 @@ mongoose.connect(process.env.URL_DB, {
 
     console.log('BD online')
 })
+
 mongoose.set('useCreateIndex', true)
 
 app.listen(process.env.PORT, () => {

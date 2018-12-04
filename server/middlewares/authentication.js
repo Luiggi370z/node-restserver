@@ -24,7 +24,7 @@ let verifyAdminRole = (req, res, next) => {
         return res.status(401).json({
             ok: false,
             error: {
-                message: 'Only admin users can add new users'
+                message: 'Only admin users.'
             }
         })
 
