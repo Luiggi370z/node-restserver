@@ -1,37 +1,55 @@
 const jwt = require('jsonwebtoken')
 
 let verifyToken = (req, res, next) => {
-    let token = req.get('Authorization')
+	let token = req.get('Authorization')
 
-    jwt.verify(token, process.env.TOKEN_SEED, (err, decoded) => {
-        if (err) {
-            return res.status(401).json({
-                ok: false,
-                err
-            })
-        }
+	jwt.verify(token, process.env.TOKEN_SEED, (err, decoded) => {
+		if (err) {
+			return res.status(401).json({
+				ok: false,
+				err
+			})
+		}
 
-        req.user = decoded.user
+		req.user = decoded.user
 
-        next()
-    })
+		next()
+	})
 }
 
 let verifyAdminRole = (req, res, next) => {
-    const user = req.user
+	const user = req.user
 
-    if (user.role !== 'ADMIN_ROLE')
-        return res.status(401).json({
-            ok: false,
-            error: {
-                message: 'Only admin users.'
-            }
-        })
+	if (user.role !== 'ADMIN_ROLE')
+		return res.status(401).json({
+			ok: false,
+			error: {
+				message: 'Only admin users.'
+			}
+		})
 
-    next()
+	next()
+}
+
+let verifyTokenImg = (req, res, next) => {
+	let token = req.query.token
+
+	jwt.verify(token, process.env.TOKEN_SEED, (err, decoded) => {
+		if (err) {
+			return res.status(401).json({
+				ok: false,
+				err
+			})
+		}
+
+		req.user = decoded.user
+
+		next()
+	})
 }
 
 module.exports = {
-    verifyToken,
-    verifyAdminRole
+	verifyToken,
+	verifyAdminRole,
+	verifyTokenImg
 }
